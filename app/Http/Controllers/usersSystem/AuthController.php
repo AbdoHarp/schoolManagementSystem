@@ -15,7 +15,17 @@ class AuthController extends Controller
     public function Login()
     {
         if (!empty(Auth::check())) {
-            return redirect("/")->with("error", "please login first");
+            if (Auth::user()->user_utype == 1) {
+                return redirect("admin/dashboard");
+            } elseif (Auth::user()->user_utype == 2) {
+                return redirect("teacher/dashboard");
+            } elseif (Auth::user()->user_utype == 3) {
+                return redirect("student/dashboard");
+            } elseif (Auth::user()->user_utype == 4) {
+                return redirect("parent/dashboard");
+            } else {
+                return redirect("/")->with("message", "What is your utype?");
+            }
         }
         return view("auth.login");
     }
@@ -24,9 +34,19 @@ class AuthController extends Controller
     {
         $remember = !empty($request->remember) ? true : false;
         if (Auth::attempt(["email" => $request->email, "password" => $request->password], $remember)) {
-            return redirect("admin/dashboard");
+            if (Auth::user()->user_utype == 1) {
+                return redirect("admin/dashboard");
+            } elseif (Auth::user()->user_utype == 2) {
+                return redirect("teacher/dashboard");
+            } elseif (Auth::user()->user_utype == 3) {
+                return redirect("student/dashboard");
+            } elseif (Auth::user()->user_utype == 4) {
+                return redirect("parent/dashboard");
+            } else {
+                return redirect("/")->with("message", "What is your utype?");
+            }
         } else {
-            return redirect()->back()->with("error", "please enter your email address and password correctly");
+            return redirect()->back()->with("message", "please enter your email address and password correctly");
         };
     }
     public function Authlogout()

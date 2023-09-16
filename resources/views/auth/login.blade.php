@@ -22,8 +22,13 @@
         <!-- /.login-logo -->
         <div class="card card-outline card-primary">
             <div class="card-header text-center">
-                <a href="" class="h1">Admin</a>
+                <a href="" class="h1">Login</a>
             </div>
+            @if (session('message'))
+                <div class="alert alert-danger">
+                    {{ session('message') }}
+                </div>
+            @endif
             <div class="card-body">
                 <p class="login-box-msg">Sign in to start your session</p>
 

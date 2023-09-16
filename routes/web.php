@@ -23,10 +23,35 @@ Route::get('logout', [AuthController::class, "Authlogout"]);
 
 
 
-Route::get('/admin/dashboard', function () {
-    return view('Admin/dashboard');
-});
+// Route::get('/admin/dashboard', function () {
+//     return view('Admin/dashboard');
+// });
 
 Route::get('/admin/adminList', function () {
     return view('Admin/adminList/list');
+});
+
+
+Route::middleware(['auth'])->group(function () {
+
+    Route::middleware(['Admin'])->group(function () {
+        Route::get('/admin/dashboard', function () {
+            return view('Admin/dashboard');
+        });
+    });
+    Route::middleware(['teacher'])->group(function () {
+        Route::get('/teacher/dashboard', function () {
+            return view('Admin/dashboard');
+        });
+    });
+    Route::middleware(['student'])->group(function () {
+        Route::get('/student/dashboard', function () {
+            return view('Admin/dashboard');
+        });
+    });
+    Route::middleware(['parent'])->group(function () {
+        Route::get('/parent/dashboard', function () {
+            return view('Admin/dashboard');
+        });
+    });
 });
