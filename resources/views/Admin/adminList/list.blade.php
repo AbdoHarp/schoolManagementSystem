@@ -2,65 +2,54 @@
 
 @section('content')
     <main>
+        @if (session('message'))
+            <div class="alert alert-success">
+                {{ session('message') }}
+            </div>
+        @endif
         <div class="container-fluid">
             <div class="row">
-                <div class="col-md-12">
+                <div class="col-sm-12">
                     <div class="card">
                         <div class="card-header">
-                            <h3 class="card-title">Striped Full Width Table</h3>
+                            <h3 class="card-title">Admin List</h3>
+                            <div style="text-align: right"><a href="{{ url('admin/admin/add') }}"
+                                    class="btn btn-success text-white btn-sm">
+                                    Add New Admin
+                                </a>
+                            </div>
+
                         </div>
                         <!-- /.card-header -->
                         <div class="card-body p-0">
                             <table class="table table-striped">
                                 <thead>
                                     <tr>
-                                        <th style="width: 10px">#</th>
-                                        <th>Task</th>
-                                        <th>Progress</th>
-                                        <th style="width: 40px">Label</th>
+                                        <th>ID</th>
+                                        <th>Name</th>
+                                        <th>Email</th>
+                                        <th>Created At</th>
+                                        <th>Action</th>
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    <tr>
-                                        <td>1.</td>
-                                        <td>Update software</td>
-                                        <td>
-                                            <div class="progress progress-xs">
-                                                <div class="progress-bar progress-bar-danger" style="width: 55%"></div>
-                                            </div>
-                                        </td>
-                                        <td><span class="badge bg-danger">55%</span></td>
-                                    </tr>
-                                    <tr>
-                                        <td>2.</td>
-                                        <td>Clean database</td>
-                                        <td>
-                                            <div class="progress progress-xs">
-                                                <div class="progress-bar bg-warning" style="width: 70%"></div>
-                                            </div>
-                                        </td>
-                                        <td><span class="badge bg-warning">70%</span></td>
-                                    </tr>
-                                    <tr>
-                                        <td>3.</td>
-                                        <td>Cron job running</td>
-                                        <td>
-                                            <div class="progress progress-xs progress-striped active">
-                                                <div class="progress-bar bg-primary" style="width: 30%"></div>
-                                            </div>
-                                        </td>
-                                        <td><span class="badge bg-primary">30%</span></td>
-                                    </tr>
-                                    <tr>
-                                        <td>4.</td>
-                                        <td>Fix and squish bugs</td>
-                                        <td>
-                                            <div class="progress progress-xs progress-striped active">
-                                                <div class="progress-bar bg-success" style="width: 90%"></div>
-                                            </div>
-                                        </td>
-                                        <td><span class="badge bg-success">90%</span></td>
-                                    </tr>
+                                    @forelse ($users as $usersList)
+                                        <tr>
+                                            <td>{{ $usersList->id }}</td>
+                                            <td>{{ $usersList->name }}</td>
+                                            <td>{{ $usersList->email }}</td>
+                                            <td>{{ $usersList->created_at }}</td>
+                                            <td><a href="{{ url('admin/admin/' . $usersList->id . '/edit') }}"
+                                                    class="btn btn-success">Edit</a>
+                                                <a href="{{ url('admin/admin/' . $usersList->id . '/delete') }}"
+                                                    class="btn btn-danger">Delete</a>
+                                            </td>
+                                        </tr>
+                                    @empty
+                                        <div>
+                                            "No Items found"
+                                        </div>
+                                    @endforelse
                                 </tbody>
                             </table>
                         </div>

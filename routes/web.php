@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\AdminController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\usersSystem\AuthController;
 use Illuminate\Support\Facades\Route;
@@ -31,15 +32,17 @@ Route::post('reset/{token}', [AuthController::class, "postReset"]);
 //     return view('Admin/dashboard');
 // });
 
-Route::get('/admin/adminList', function () {
-    return view('Admin/adminList/list');
-});
 
 
 Route::middleware(['auth'])->group(function () {
 
     Route::middleware(['Admin'])->group(function () {
         Route::get("/admin/dashboard", [DashboardController::class, "dashboard"]);
+        Route::get("/admin/admin/list", [AdminController::class, "list"]);
+        Route::get("/admin/admin/add", [AdminController::class, "create"]);
+        Route::post("/admin/admin/add", [AdminController::class, "store"]);
+        Route::get("/admin/admin/{user_id}/edit", [AdminController::class, "edit"]);
+        Route::put("/admin/admin/{user_id}", [AdminController::class, "update"]);
     });
     Route::middleware(['teacher'])->group(function () {
         Route::get("/teacher/dashboard", [DashboardController::class, "dashboard"]);
