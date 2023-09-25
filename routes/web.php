@@ -43,6 +43,7 @@ Route::middleware(['auth'])->group(function () {
         Route::post("/admin/admin/add", [AdminController::class, "store"]);
         Route::get("/admin/admin/{user_id}/edit", [AdminController::class, "edit"]);
         Route::put("/admin/admin/{user_id}", [AdminController::class, "update"]);
+        Route::get("/admin/admin/{user_id}/delete", [AdminController::class, "delete"]);
     });
     Route::middleware(['teacher'])->group(function () {
         Route::get("/teacher/dashboard", [DashboardController::class, "dashboard"]);

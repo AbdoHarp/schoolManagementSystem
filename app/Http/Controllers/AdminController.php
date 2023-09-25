@@ -22,6 +22,10 @@ class AdminController extends Controller
 
     public function store(Request $request)
     {
+
+        $request->validate([
+            "email" => "required|email|unique:users"
+        ]);
         // dd($request->all());
         $users = new User;
         $users->name = $request->name;
@@ -43,10 +47,21 @@ class AdminController extends Controller
 
     public function update(Request $request, $user_id)
     {
+        $request->validate([
+            "email" => "required|email|unique:users"
+        ]);
         User::findOrFail($user_id)->update([
             'name' => $request->name,
+            "email" => $request->email,
             'password' => Hash::make($request['password'])
         ]);
         return redirect('/admin/admin/list')->with('message', 'User updated Successfully');
+    }
+
+    public function delete(Request $request, $user_id)
+    {
+        $users = User::findOrFail($user_id);
+        $users->delete();
+        return redirect("/admin/admin/list")->with('message', 'User deleted Successfully');
     }
 }
