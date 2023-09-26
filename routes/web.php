@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\AdminController;
+use App\Http\Controllers\ClassController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\usersSystem\AuthController;
 use Illuminate\Support\Facades\Route;
@@ -44,6 +45,15 @@ Route::middleware(['auth'])->group(function () {
         Route::get("/admin/admin/{user_id}/edit", [AdminController::class, "edit"]);
         Route::put("/admin/admin/{user_id}", [AdminController::class, "update"]);
         Route::get("/admin/admin/{user_id}/delete", [AdminController::class, "delete"]);
+
+
+        // class url Route
+        Route::get("/admin/class/list", [ClassController::class, "list"]);
+        Route::get("/admin/class/add", [ClassController::class, "create"]);
+        Route::post("/admin/class/add", [ClassController::class, "store"]);
+        Route::get("/admin/class/{user_id}/edit", [ClassController::class, "edit"]);
+        Route::put("/admin/class/{user_id}", [ClassController::class, "update"]);
+        Route::get("/admin/class/{user_id}/delete", [ClassController::class, "delete"]);
     });
     Route::middleware(['teacher'])->group(function () {
         Route::get("/teacher/dashboard", [DashboardController::class, "dashboard"]);

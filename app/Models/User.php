@@ -53,4 +53,8 @@ class User extends Authenticatable
     {
         return User::where("remember_token", "=", $remember_token)->first();
     }
+    public function classes()
+    {
+        return $this->hasMany(ClassModel::class, 'user_id', 'id');
+    }
 }

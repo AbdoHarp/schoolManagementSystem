@@ -10,27 +10,23 @@
             </div>
         </div><!-- /.container-fluid -->
     </section>
-    <div class="card-body">
-
-        <form action="" method="GET">
-            <div class="row">
-                <div class="col-md-3">
-                    <label>Filter by Date</label>
-                    <input type="text" name="name" value="{{ Request::get('name') }}" class="form-control">
-                </div>
-                <div class="col-md-3">
-                    <label>Filter by Date</label>
-                    <input type="date" name="date" value="{{ Request::get('date') ?? date('Y-m-d') }}"
-                        class="form-control">
-                </div>
-                <div class="col-md-6">
-                    <br />
-                    <button type="submit" class="btn btn-sm text-white btn-primary">Search</button>
-                    <button type="submit" class="btn btn-sm text-white btn-danger">Reset</button>
-                </div>
+    <form action="" method="GET">
+        <div class="row">
+            <div class="col-md-3">
+                <label>Filter by Date</label>
+                <input type="text" name="name" value="{{ Request::get('name') }}" class="form-control">
             </div>
-        </form>
-    </div>
+            <div class="col-md-3">
+                <label>Filter by Date</label>
+                <input type="date" name="date" value="{{ Request::get('date') ?? date('Y-m-d') }}"
+                    class="form-control">
+            </div>
+            <div class="col-md-6">
+                <br />
+                <button type="submit" class="btn btn-sm text-white btn-primary">Filter</button>
+            </div>
+        </div>
+    </form>
     <main>
         @if (session('message'))
             <div class="alert alert-success">
@@ -43,7 +39,7 @@
                     <div class="card">
                         <div class="card-header">
                             <h3 class="card-title">Admin List</h3>
-                            <div style="text-align: right"><a href="{{ url('admin/admin/add') }}"
+                            <div style="text-align: right"><a href="{{ url('admin/class/add') }}"
                                     class="btn btn-success text-white btn-sm">
                                     Add New Admin
                                 </a>
@@ -57,21 +53,27 @@
                                     <tr>
                                         <th>ID</th>
                                         <th>Name</th>
-                                        <th>Email</th>
+                                        <th>Status</th>
+                                        {{-- <th>Create by</th> --}}
                                         <th>Created At</th>
                                         <th>Action</th>
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    @forelse ($users as $usersList)
+                                    @forelse ($classs as $classItem)
                                         <tr>
-                                            <td>{{ $usersList->id }}</td>
-                                            <td>{{ $usersList->name }}</td>
-                                            <td>{{ $usersList->email }}</td>
-                                            <td>{{ $usersList->created_at }}</td>
-                                            <td><a href="{{ url('admin/admin/' . $usersList->id . '/edit') }}"
+                                            <td>{{ $classItem->id }}</td>
+                                            <td>{{ $classItem->name }}</td>
+                                            @if ($classItem->status == 0)
+                                                <td>Acteve</td>
+                                            @else
+                                                <td>Incolme</td>
+                                            @endif
+                                            {{-- <td>{{ $classItem->user->name }}</td> --}}
+                                            <td>{{ $classItem->created_at->format('d-m-Y') }}</td>
+                                            <td><a href="{{ url('admin/class/' . $classItem->id . '/edit') }}"
                                                     class="btn btn-success">Edit</a>
-                                                <a href="{{ url('admin/admin/' . $usersList->id . '/delete') }}"
+                                                <a href="{{ url('admin/class/' . $classItem->id . '/delete') }}"
                                                     class="btn btn-danger">Delete</a>
                                             </td>
                                         </tr>
@@ -83,7 +85,7 @@
                                 </tbody>
                             </table>
                             <div style="float:right">
-                                {{ $users->links() }}
+                                {{ $classs->links() }}
 
                             </div>
                         </div>
