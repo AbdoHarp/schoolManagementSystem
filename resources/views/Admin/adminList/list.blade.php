@@ -1,6 +1,35 @@
 @extends('layouts/app')
 
 @section('content')
+    <section class="content-header">
+        <div class="container-fluid">
+            <div class="row mb-2">
+                <div class="col-sm-12">
+                    <h1>List of Admin</h1>
+                </div>
+            </div>
+        </div><!-- /.container-fluid -->
+    </section>
+    <form action="" method="POST">
+        {{ csrf_field() }}
+        <div class="card-body">
+            <div class="form-group">
+                <label>Name</label>
+                <input type="name" class="form-control" name="name" value="{{ old('name') }}" placeholder="Name">
+            </div>
+            <div class="form-group">
+                <label>Email</label>
+                <input type="email" class="form-control" value="{{ old('email') }}" name="email" placeholder="Email">
+                <div class="alert-danger">{{ $errors->first('email') }}</div>
+            </div>
+
+        </div>
+        <!-- /.card-body -->
+
+        <div class="card-footer">
+            <button type="submit" class="btn btn-primary">Submit</button>
+        </div>
+    </form>
     <main>
         @if (session('message'))
             <div class="alert alert-success">
@@ -52,6 +81,10 @@
                                     @endforelse
                                 </tbody>
                             </table>
+                            <div style="float:right">
+                                {{ $users->links() }}
+
+                            </div>
                         </div>
                         <!-- /.card-body -->
                     </div>
